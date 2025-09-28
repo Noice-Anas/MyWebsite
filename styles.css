@@ -281,11 +281,6 @@ h1 {
     border-color: #0077b5;
 }
 
-.social-link.blinq:hover {
-    background: rgba(124, 77, 255, 0.3);
-    border-color: #7c4dff;
-}
-
 @media (max-width: 480px) {
     .container {
         padding: 1.5rem;
