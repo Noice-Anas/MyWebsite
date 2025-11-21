@@ -4,6 +4,37 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('active');
 }
 
+// Load article header metadata from config
+function loadArticleHeader() {
+    const articleContainer = document.querySelector('[data-article-id]');
+    if (!articleContainer) return;
+
+    const articleId = articleContainer.getAttribute('data-article-id');
+    const article = getArticleById(articleId);
+
+    if (!article) {
+        console.warn(`Article with ID "${articleId}" not found in config`);
+        return;
+    }
+
+    // Populate title
+    document.querySelector('.article-title').textContent = article.title;
+
+    // Populate date
+    const formattedDate = new Date(article.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.querySelector('.article-date').textContent = formattedDate;
+
+    // Populate read time
+    document.querySelector('.article-read-time').textContent = `${article.readTime} min read`;
+
+    // Populate tags
+    const tagsContainer = document.querySelector('.article-tags');
+    tagsContainer.innerHTML = article.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+
+    // Update page title
+    document.title = `${article.title} - Anas Alhalabi`;
+}
+
 // Load articles into grid
 function loadArticles(limit = null) {
     const articlesGrid = document.getElementById('articlesGrid');
@@ -28,6 +59,9 @@ function loadArticles(limit = null) {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Load article header metadata if on article page
+    loadArticleHeader();
+
     // Load articles
     const articlesGrid = document.getElementById('articlesGrid');
     if (articlesGrid && typeof articlesData !== 'undefined') {
