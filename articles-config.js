@@ -6,7 +6,7 @@ const articlesData = [
         date: '2025-11-21',
         description: 'Configure VSCode for iOS development with modern AI coding tools. Learn how to set up xcode-build-server, xcbeautify, and swiftformat for a seamless development experience.',
         tags: ['iOS', 'VSCode', 'Development', 'Setup', 'Swift', 'AI Tools'],
-        readTime: 8,
+        readTime: 12,
         featured: true
     }
 ];
