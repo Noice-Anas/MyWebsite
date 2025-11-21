@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode iOS Development Setup Guide - Anas Alhalabi</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="header">
+        <div class="nav">
+            <a href="../index.html" class="logo">Anas</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../articles.html">Articles</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="article-container">
+            <header class="article-header">
+                <h1>VSCode iOS Development Setup Guide</h1>
+                <div class="article-meta">
+                    <span class="article-date">November 21, 2025</span>
+                    <span class="article-read-time">8 min read</span>
+                </div>
+                <div class="article-tags">
+                    <span class="tag">iOS</span>
+                    <span class="tag">VSCode</span>
+                    <span class="tag">Development</span>
+                    <span class="tag">Swift</span>
+                    <span class="tag">AI Tools</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>Xcode doesn't support modern AI coding tools. So I spent a day getting VSCode to work for iOS development – and it was worth every minute.</p>
+
+                <p>Most iOS developers are locked into Xcode. It's the default, it works, but it's also heavy, rigid, and completely behind on AI integration. I wanted the flexibility of VSCode and access to modern AI coding tools, but the setup? That was a different story.</p>
+
+                <h2>The Problem</h2>
+                <ul>
+                    <li>Language features like "jump to definition" simply didn't work</li>
+                    <li>Build output was cryptic and hard to read</li>
+                    <li>Debugging felt like a puzzle with missing pieces</li>
+                    <li>Documentation was scattered across different tools and extensions</li>
+                    <li><strong>AI integration with Xcode was practically non-existent</strong> – no inline completions, no chat-based coding assistance, no modern AI tooling that's become essential to my workflow</li>
+                    <li>Yes, there's "Xcode Copilot" but it's a clunky workaround that requires running a separate app, manually syncing contexts, and still doesn't give you the seamless AI experience you get in VSCode. Not worth the hassle.</li>
+                </ul>
+
+                <h2>The Journey</h2>
+                <p>After trial and error, I discovered the right combination:</p>
+                <ul>
+                    <li><code>xcode-build-server</code> for language server support</li>
+                    <li><code>xcbeautify</code> to make build output actually readable</li>
+                    <li><code>swiftformat</code> for consistent code formatting</li>
+                    <li>The Sweetpad extension to tie it all together</li>
+                </ul>
+
+                <h2>The Breakthrough</h2>
+                <p>The turning point was realizing I needed to generate a build server config AND do an initial build before anything would work properly. Such a small detail that cost me hours.</p>
+
+                <p>But here's what made it all worth it: once configured, VSCode gave me access to the entire ecosystem of AI coding assistants – GitHub Copilot, Claude, Cursor, you name it. Suddenly I had intelligent code completion, context-aware suggestions, and AI-powered refactoring for Swift. Things that Xcode simply doesn't support.</p>
+
+                <p>No separate apps. No manual context syncing. Just native, seamless AI assistance built right into my editor.</p>
+
+                <h2>Why This Matters</h2>
+                <p>Not every developer workflow is the same. Some of us want lighter tools, better customization, or just a different environment. But more importantly, <strong>AI-assisted coding is becoming non-negotiable</strong>.</p>
+
+                <p>Xcode's lack of modern AI tooling puts iOS developers at a disadvantage. While web and backend developers are leveraging AI to write, refactor, and debug code faster, iOS developers using Xcode are stuck doing everything manually. VSCode bridges that gap, bringing iOS development into the modern AI-powered workflow without sacrificing the native tooling when you need it.</p>
+
+                <h2>Key Takeaways</h2>
+                <ul>
+                    <li>VSCode is a viable alternative to Xcode for iOS development</li>
+                    <li>Modern AI coding tools provide significant productivity benefits</li>
+                    <li>Proper tooling setup is critical – invest time in configuration</li>
+                    <li>The iOS development ecosystem needs better AI integration</li>
+                    <li>Flexibility in development environments matters for developer satisfaction</li>
+                </ul>
+            </div>
+
+            <footer class="article-footer">
+                <div class="article-navigation">
+                    <a href="../articles.html" class="btn">← Back to Articles</a>
+                </div>
+                <div class="article-tags-footer">
+                    <strong>Tags:</strong>
+                    <span class="tag">iOS</span>
+                    <span class="tag">VSCode</span>
+                    <span class="tag">Development Setup</span>
+                    <span class="tag">Swift</span>
+                    <span class="tag">AI Tools</span>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <script src="../articles-config.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

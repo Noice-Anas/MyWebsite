@@ -7,16 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav class="header">
+        <div class="nav">
+            <a href="#home" class="logo">Anas</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#articles">Articles</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
     <main class="main-content">
         <section class="hero" id="home">
             <div class="container">
                 <h1>Anas Alhalabi</h1>
                 <p class="subtitle">Frontend Developer | Aspiring Fullstack Developer</p>
                 <p class="description">
-                    Hello! I'm a passionate Mobile frontend developer with a keen eye for creating 
-                    beautiful and intuitive user interfaces. Currently on an exciting journey 
-                    to expand my skills and become a fullstack developer, diving deep into 
-                    backend technologies and database management. I love turning ideas into 
+                    Hello! I'm a passionate Mobile frontend developer with a keen eye for creating
+                    beautiful and intuitive user interfaces. Currently on an exciting journey
+                    to expand my skills and become a fullstack developer, diving deep into
+                    backend technologies and database management. I love turning ideas into
                     reality through clean, efficient code and meaningful user experiences.
                 </p>
                 <div class="quote-section">
@@ -40,8 +51,22 @@
                 </div>
             </div>
         </section>
+
+        <section class="articles-section" id="articles">
+            <div class="container articles-container">
+                <h2>Recent Articles</h2>
+                <p class="section-subtitle">Technical guides and insights on web development, iOS, and modern tooling</p>
+                <div class="articles-grid" id="articlesGrid">
+                    <!-- Articles will be loaded here by JavaScript -->
+                </div>
+                <div class="articles-footer">
+                    <a href="articles.html" class="btn btn-primary">View All Articles</a>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <script src="articles-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
