@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(afplay:*)",
+      "Bash(git -C /Users/anasalhalabi/Desktop/MyWebsite log --oneline -10)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
