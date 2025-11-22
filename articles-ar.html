@@ -7,8 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="alternate" hreflang="en" href="https://noiceanas.com/articles.html" />
     <link rel="alternate" hreflang="ar" href="https://noiceanas.com/articles-ar.html" />
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.165.0/build/three.module.js"
+            }
+        }
+    </script>
 </head>
 <body>
+    <canvas id="bg"></canvas>
     <nav class="header">
         <div class="nav">
             <a href="index-ar.html" class="logo"><img src="assets/anas_logo.svg" alt="أنس الحلبي" class="logo-img"></a>
@@ -35,6 +43,7 @@
         </section>
     </main>
 
+    <script type="module" src="galaxy-bg.js"></script>
     <script src="articles-config.js"></script>
     <script src="script.js"></script>
 </body>
