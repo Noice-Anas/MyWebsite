@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنس الحلبي - محفظة أعمالي</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="alternate" hreflang="en" href="https://noiceanas.com/index.html" />
+    <link rel="alternate" hreflang="ar" href="https://noiceanas.com/index-ar.html" />
+</head>
+<body>
+    <nav class="header">
+        <div class="nav">
+            <a href="#home" class="logo"><img src="assets/anas_logo.svg" alt="أنس الحلبي" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#articles">المقالات</a></li>
+                <li><a href="index.html" class="lang-toggle">English</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>أنس الحلبي</h1>
+                <p class="subtitle">مطور واجهة أمامية | مطور متكامل طموح</p>
+                <p class="description">
+                    أقوم بتحويل الأفكار إلى واجهات جميلة وعملية. أعمل على توسيع مهاراتي لأصبح مطورًا متكاملًا مع التركيز على الكود النظيف والتجارب المستخدم الذات معنى.
+                </p>
+                <div class="hint-badge">
+                    <span class="badge-emoji">💡</span>
+                    <p class="badge-text"><a href="#services">بالمناسبة، أقدم خدمات لمساعدتك على العمل بذكاء أكثر</a></p>
+                </div>
+                <div class="quote-section">
+                    <blockquote class="developer-quote">
+                        "أي احمق يمكنه كتابة كود يفهمه الحاسوب. المبرمجون الجيدون يكتبون كودًا يفهمه البشر."
+                        <cite>- مارتن فاولر</cite>
+                    </blockquote>
+                </div>
+                <div class="social-links">
+                    <h3>تواصل معي</h3>
+                    <div class="links-container">
+                        <a href="https://github.com/Noice-Anas" target="_blank" class="social-link github">
+                            <span class="icon">📱</span>
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/anas-al-halabi/" target="_blank" class="social-link linkedin">
+                            <span class="icon">💼</span>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-section" id="services">
+            <div class="services-wrapper">
+                <div class="services-content">
+                    <h2>الخدمات</h2>
+                    <p class="section-subtitle">خبرة متخصصة لمساعدتك في تحقيق أهدافك</p>
+                    <div class="services-list">
+                        <div class="service-item">
+                            <div class="service-icon">🍎</div>
+                            <h3>إتقان إنتاجية macOS</h3>
+                            <p>قد يبدو جهاز MacBook مجرد جهاز كمبيوتر عادي... أو قد يشعرك أنه بيتك. أساعدك في جعل يومك أسرع بمعدل 5 مرات على الأقل. من الاختصارات إلى تعديلات النظام، الهدف بسيط: اجعل جهاز MacBook بمثابة امتداد لك.</p>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon">🚀</div>
+                            <h3>بناء عقول الأعمال باستخدام Notion</h3>
+                            <p>Notion ليس مجرد أداة—إنها عقل الأعمال. أصمم أنظمة تساعد الفرق على البقاء منظمة وموحدة وفعالة، بدون الفوضى.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="services-sidebar">
+                    <div class="cta-card primary-cta">
+                        <h3>هل أنت مستعد للبدء؟</h3>
+                        <p>دعنا نناقش كيف يمكنني مساعدتك في تحويل إنتاجيتك أو بناء عقل أعمالك.</p>
+                        <a href="mailto:anas.alhalabi.official@gmail.com" class="btn btn-cta">تواصل معي</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="articles-section" id="articles">
+            <div class="container articles-container">
+                <h2>المقالات الأخيرة</h2>
+                <p class="section-subtitle">أدلة تقنية ورؤى حول تطوير الويب وتطوير iOS والأدوات الحديثة</p>
+                <div class="articles-grid" id="articlesGrid">
+                    <!-- Articles will be loaded here by JavaScript -->
+                </div>
+                <div class="articles-footer">
+                    <a href="articles.html" class="btn btn-primary">عرض جميع المقالات</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="articles-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

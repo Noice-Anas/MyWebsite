@@ -1,15 +1,24 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cairo:wght@400;600;700&display=swap');
+
 /* Reset and Base Styles */
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Arabic font support */
+html[dir="rtl"] body {
+    font-family: 'Cairo', sans-serif;
 }
 
 /* Header and Navigation */
@@ -74,6 +83,19 @@ body {
 
 .nav-links a:hover {
     opacity: 0.7;
+}
+
+.lang-toggle {
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.lang-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Mobile Navigation */
@@ -177,14 +199,14 @@ h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     margin: 0 0 1rem 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    font-weight: 300;
+    font-weight: 600;
 }
 
 .subtitle {
     font-size: clamp(1rem, 3vw, 1.4rem);
     margin: 1rem 0 2rem 0;
     opacity: 0.9;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .description {
@@ -192,6 +214,7 @@ h1 {
     margin: 1rem 0;
     opacity: 0.8;
     line-height: 1.8;
+    font-weight: 400;
 }
 
 /* Buttons */
@@ -409,7 +432,7 @@ h1 {
 
 .services-content h2 {
     font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 400;
+    font-weight: 600;
     margin: 0 0 0.5rem 0;
 }
 
@@ -447,7 +470,7 @@ h1 {
 .service-item h3 {
     margin: 0 0 1rem 0;
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.3;
 }
 
@@ -477,7 +500,7 @@ h1 {
 .cta-card h3 {
     margin: 0 0 0.8rem 0;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.3;
 }
 
@@ -575,7 +598,7 @@ h1 {
     text-align: center;
     margin-bottom: 0.5rem;
     font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .section-subtitle {
@@ -622,7 +645,7 @@ h1 {
 .article-card h3 {
     margin: 0 0 1rem 0;
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.4;
 }
 
@@ -725,13 +748,13 @@ h1 {
 .article-content h2 {
     font-size: 1.6rem;
     margin: 2rem 0 1rem 0;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .article-content h3 {
     font-size: 1.3rem;
     margin: 1.5rem 0 0.8rem 0;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .article-content p {
@@ -914,4 +937,45 @@ h1 {
     .article-card h3 {
         font-size: 1.2rem;
     }
+}
+
+/* RTL Support for Arabic */
+html[dir="rtl"] .hint-badge {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .developer-quote cite {
+    text-align: left;
+}
+
+html[dir="rtl"] .quote-section {
+    border-left: none;
+    border-right: 4px solid rgba(255, 255, 255, 0.3);
+}
+
+html[dir="rtl"] .article-content ul,
+html[dir="rtl"] .article-content ol {
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+html[dir="rtl"] .links-container {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .services-wrapper {
+    grid-template-columns: 380px 1fr;
+}
+
+html[dir="rtl"] .services-sidebar {
+    grid-column: auto;
+}
+
+html[dir="rtl"] .article-card-meta {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .article-tags-footer {
+    flex-direction: row-reverse;
 }

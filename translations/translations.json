@@ -1,0 +1,80 @@
+{
+  "en": {
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "articles": "Articles",
+      "language": "العربية"
+    },
+    "hero": {
+      "name": "Anas Alhalabi",
+      "subtitle": "Frontend Developer | Aspiring Fullstack Developer",
+      "description": "Frontend developer turning ideas into beautiful, functional interfaces. Expanding into fullstack development with a focus on clean code and meaningful user experiences.",
+      "hint": "BTW I provide services to help you work smarter",
+      "quote": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+      "quoteAuthor": "- Martin Fowler",
+      "connect": "Connect with me"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Specialized expertise to help you achieve your goals",
+      "service1": {
+        "title": "Mastering macOS Productivity",
+        "description": "A MacBook can either feel like just another laptop... or it can feel like home. I help people make their day at least 5x faster. From shortcuts to system tweaks, the goal is simple: make your MacBook feel like an extension of you."
+      },
+      "service2": {
+        "title": "Building Business Brains with Notion",
+        "description": "Notion isn't just a tool—it's a business brain. I design systems that help teams stay organized, aligned, and efficient, without the clutter."
+      },
+      "cta": {
+        "title": "Ready to get started?",
+        "description": "Let's discuss how I can help transform your productivity or build your business brain.",
+        "button": "Get in Touch"
+      }
+    },
+    "articles": {
+      "title": "Recent Articles",
+      "subtitle": "Technical guides and insights on web development, iOS, and modern tooling",
+      "viewAll": "View All Articles"
+    }
+  },
+  "ar": {
+    "nav": {
+      "home": "الرئيسية",
+      "services": "الخدمات",
+      "articles": "المقالات",
+      "language": "English"
+    },
+    "hero": {
+      "name": "أنس الحلبي",
+      "subtitle": "مطور واجهة أمامية | مطور متكامل طموح",
+      "description": "أقوم بتحويل الأفكار إلى واجهات جميلة وعملية. أعمل على توسيع مهاراتي لأصبح مطورًا متكاملًا مع التركيز على الكود النظيف والتجارب المستخدم الذات معنى.",
+      "hint": "بالمناسبة، أقدم خدمات لمساعدتك على العمل بذكاء أكثر",
+      "quote": "أي احمق يمكنه كتابة كود يفهمه الحاسوب. المبرمجون الجيدون يكتبون كودًا يفهمه البشر.",
+      "quoteAuthor": "- مارتن فاولر",
+      "connect": "تواصل معي"
+    },
+    "services": {
+      "title": "الخدمات",
+      "subtitle": "خبرة متخصصة لمساعدتك في تحقيق أهدافك",
+      "service1": {
+        "title": "إتقان إنتاجية macOS",
+        "description": "قد يبدو جهاز MacBook مجرد جهاز كمبيوتر عادي... أو قد يشعرك أنه بيتك. أساعدك في جعل يومك أسرع بمعدل 5 مرات على الأقل. من الاختصارات إلى تعديلات النظام، الهدف بسيط: اجعل جهاز MacBook بمثابة امتداد لك."
+      },
+      "service2": {
+        "title": "بناء عقول الأعمال باستخدام Notion",
+        "description": "Notion ليس مجرد أداة—إنها عقل الأعمال. أصمم أنظمة تساعد الفرق على البقاء منظمة وموحدة وفعالة، بدون الفوضى."
+      },
+      "cta": {
+        "title": "هل أنت مستعد للبدء؟",
+        "description": "دعنا نناقش كيف يمكنني مساعدتك في تحويل إنتاجيتك أو بناء عقل أعمالك.",
+        "button": "تواصل معي"
+      }
+    },
+    "articles": {
+      "title": "المقالات الأخيرة",
+      "subtitle": "أدلة تقنية ورؤى حول تطوير الويب وتطوير iOS والأدوات الحديثة",
+      "viewAll": "عرض جميع المقالات"
+    }
+  }
+}

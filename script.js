@@ -41,20 +41,28 @@ function loadArticles(limit = null) {
     if (!articlesGrid) return;
 
     const articles = limit ? getRecentArticles(limit) : (typeof articlesData !== 'undefined' ? articlesData : []);
+    const isArabic = document.documentElement.lang === 'ar';
 
-    articlesGrid.innerHTML = articles.map(article => `
-        <a href="articles/${article.id}.html" class="article-card">
-            <h3>${article.title}</h3>
-            <p>${article.description}</p>
-            <div class="article-card-meta">
-                <span class="article-card-date">📅 ${new Date(article.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                <span class="article-card-read-time">⏱️ ${article.readTime} min read</span>
-            </div>
-            <div class="article-card-tags">
-                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-        </a>
-    `).join('');
+    articlesGrid.innerHTML = articles.map(article => {
+        const title = isArabic ? article.titleAr || article.title : article.title;
+        const description = isArabic ? article.descriptionAr || article.description : article.description;
+        const tags = isArabic ? article.tagsAr || article.tags : article.tags;
+        const readTimeLabel = isArabic ? 'دقائق قراءة' : 'min read';
+
+        return `
+            <a href="articles/${article.id}.html" class="article-card">
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <div class="article-card-meta">
+                    <span class="article-card-date">📅 ${new Date(article.date).toLocaleDateString(isArabic ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                    <span class="article-card-read-time">⏱️ ${article.readTime} ${readTimeLabel}</span>
+                </div>
+                <div class="article-card-tags">
+                    ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+            </a>
+        `;
+    }).join('');
 }
 
 // Initialize when DOM is loaded
