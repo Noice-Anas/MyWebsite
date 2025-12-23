@@ -30,7 +30,7 @@ const ProfileCardComponent = ({
   behindGlowSize,
   className = '',
   enableTilt = true,
-  enableMobileTilt = true,
+  enableMobileTilt = false,
   mobileTiltSensitivity = 5,
   miniAvatarUrl = 'assets/anas_headshot.png',
   name = 'Anas Alhalabi',
