@@ -114,4 +114,82 @@ document.addEventListener('DOMContentLoaded', function() {
             navLinks.classList.remove('active');
         }
     });
+
+    // GSAP ScrollTrigger Animations
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll-triggered parallax fade
+        const profileHero = document.querySelector('.profile-hero');
+        if (profileHero) {
+            gsap.to(profileHero, {
+                scrollTrigger: {
+                    trigger: profileHero,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1
+                },
+                yPercent: 30,
+                scale: 0.9,
+                opacity: 0.3,
+                ease: 'none'
+            });
+        }
+
+        // Animate main content sections
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            // Hero section animation
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                gsap.from(heroSection, {
+                    scrollTrigger: {
+                        trigger: heroSection,
+                        start: 'top 80%',
+                        end: 'top 20%',
+                        scrub: 1
+                    },
+                    scale: 0.8,
+                    opacity: 0,
+                    y: 100,
+                    transformOrigin: 'center center',
+                    ease: 'power2.out'
+                });
+            }
+
+            // Services section animation
+            const servicesSection = document.querySelector('.services-section');
+            if (servicesSection) {
+                gsap.from(servicesSection, {
+                    scrollTrigger: {
+                        trigger: servicesSection,
+                        start: 'top 80%',
+                        end: 'top 30%',
+                        scrub: 1
+                    },
+                    scale: 0.9,
+                    opacity: 0,
+                    y: 80,
+                    ease: 'power2.out'
+                });
+            }
+
+            // Articles section animation
+            const articlesSection = document.querySelector('.articles-section');
+            if (articlesSection) {
+                gsap.from(articlesSection, {
+                    scrollTrigger: {
+                        trigger: articlesSection,
+                        start: 'top 80%',
+                        end: 'top 30%',
+                        scrub: 1
+                    },
+                    scale: 0.9,
+                    opacity: 0,
+                    y: 80,
+                    ease: 'power2.out'
+                });
+            }
+        }
+    }
 });

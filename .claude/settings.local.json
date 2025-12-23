@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(afplay:*)",
-      "Bash(git -C /Users/anasalhalabi/Desktop/MyWebsite log --oneline -10)"
+      "Bash(git -C /Users/anasalhalabi/Desktop/MyWebsite log --oneline -10)",
+      "Bash(wc:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

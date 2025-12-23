@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="alternate" hreflang="en" href="https://noiceanas.com/index.html" />
     <link rel="alternate" hreflang="ar" href="https://noiceanas.com/index-ar.html" />
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script type="importmap">
         {
             "imports": {
@@ -16,7 +18,11 @@
     </script>
 </head>
 <body>
-    <canvas id="bg"></canvas>
+    <!-- Profile Card Hero Section -->
+    <section class="profile-hero" id="profile-hero">
+        <div id="profile-card-root"></div>
+    </section>
+
     <nav class="header">
         <div class="nav">
             <a href="#home" class="logo"><img src="assets/anas_logo.svg" alt="أنس الحلبي" class="logo-img"></a>
@@ -109,5 +115,7 @@
     <script type="module" src="galaxy-bg.js"></script>
     <script src="articles-config.js"></script>
     <script src="script.js"></script>
+    <script src="components/FluidCursor.js"></script>
+    <script src="components/ProfileCardInit.js"></script>
 </body>
 </html>

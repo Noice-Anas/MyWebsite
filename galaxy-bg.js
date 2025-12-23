@@ -130,7 +130,7 @@ function generateGalaxy() {
     sizeAttenuation: true,
     vertexColors: true,
     transparent: true,
-    opacity: 0.9,
+    opacity: 0.5,
     depthWrite: false,
     map: createStarTexture(),
   });
