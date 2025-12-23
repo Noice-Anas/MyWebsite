@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VSCode iOS Development Setup Guide - Anas Alhalabi</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/anas_logo.svg">
     <link rel="stylesheet" href="../styles.css">
     <script type="importmap">
         {
@@ -15,16 +16,7 @@
 </head>
 <body>
     <canvas id="bg"></canvas>
-    <nav class="header">
-        <div class="nav">
-            <a href="../index.html" class="logo"><img src="../assets/anas_logo.svg" alt="Anas Alhalabi Logo" class="logo-img"></a>
-            <ul class="nav-links">
-                <li><a href="../index.html#home">Home</a></li>
-                <li><a href="../articles.html">Articles</a></li>
-            </ul>
-            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
-        </div>
-    </nav>
+    <!-- Header loaded dynamically by Header.js -->
 
     <main class="main-content">
         <article class="article-container" data-article-id="vscode-ios-development-setup">
@@ -145,8 +137,7 @@
         </article>
     </main>
 
-    <script type="module" src="../galaxy-bg.js"></script>
-    <script src="../articles-config.js"></script>
+    <script type="module" src="../galaxy-bg.js"></script>    <script src=\"../components/Header.js\"></script>    <script src="../articles-config.js"></script>
     <script src="../script.js"></script>
 </body>
 </html>

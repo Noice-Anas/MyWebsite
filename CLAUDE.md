@@ -86,6 +86,20 @@ Manual deployment is optional since the workflow is automated.
 
 ## Important Patterns & Guidelines
 
+### Shared Header Component
+
+The header is now a **reusable component** managed by `components/Header.js`. This means:
+
+- **English Header**: Edit `components/header.html` to change the navigation for all English pages
+- **Arabic Header**: Edit `components/header-ar.html` to change the navigation for all Arabic pages
+- **Auto-injected**: All HTML files automatically load the appropriate header via JavaScript
+- **Single Source of Truth**: Update the header component once, and all pages reflect the change instantly
+
+**To add a new navigation link:**
+
+1. Edit the appropriate header file (`components/header.html` or `components/header-ar.html`)
+2. Changes apply automatically to all pages without editing individual HTML files
+
 ### Responsive Design
 
 - Use `clamp()` for scalable typography (already implemented in hero section)

@@ -78,19 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         loadArticles(limit);
     }
 
-    // Mobile menu button event listener
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    }
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.remove('active');
-        });
-    });
-
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -105,15 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const nav = document.querySelector('.nav');
-        const navLinks = document.querySelector('.nav-links');
 
-        if (!nav.contains(event.target)) {
-            navLinks.classList.remove('active');
-        }
-    });
 
     // GSAP ScrollTrigger Animations
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
