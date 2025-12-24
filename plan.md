@@ -3,6 +3,11 @@
 ## Overview
 This document provides a step-by-step implementation guide for migrating your portfolio from vanilla HTML/CSS/JS to Next.js 16.1.1 + Tailwind CSS.
 
+**Migration Approach:** In-place migration of existing project
+**Current Project:** `/Users/anasalhalabi/Desktop/MyWebsite`
+**Working Branch:** `version-2.0`
+**Backup:** Already completed on separate branch
+
 **Current Status:** Planning Phase
 **Target Completion:** 14 days (2 weeks)
 
@@ -13,38 +18,63 @@ This document provides a step-by-step implementation guide for migrating your po
 Before starting implementation:
 - [x] Create CLAUDE.md as source of truth
 - [x] Create plan.md for implementation tracking
-- [ ] Back up current website
-- [ ] Create new GitHub branch: `version-2.0-nextjs`
-- [ ] Review and approve the migration plan
+- [x] Back up current website
+- [x] Create new GitHub branch: `version-2.0`
+- [x] Review and approve the migration plan
+
+## Important Notes for In-Place Migration
+
+**Working with Existing Files:**
+- Your old HTML, CSS, and JS files will coexist with new Next.js files during migration
+- Do NOT delete old files until the migration is complete and tested
+- The old files serve as reference for content and styling
+- Once Next.js is fully working, old files can be removed or moved to an archive folder
+
+**File Organization:**
+- Old files: Keep in root directory as reference (index.html, styles/, scripts/, etc.)
+- New files: Create in `src/` directory (Next.js App Router structure)
+- Public assets: Move/organize into `public/assets/` for Next.js
 
 ---
 
 ## Phase 1: Foundation Setup (Days 1-2)
 
-### Step 1.1: Initialize Next.js Project
+### Step 1.1: Initialize Next.js in Existing Project
 
-**Location:** `/Users/anasalhalabi/Desktop/`
+**Location:** `/Users/anasalhalabi/Desktop/MyWebsite`
+
+**Note:** Since you've already backed up your current site on another branch, we'll convert the existing project to Next.js.
 
 ```bash
-# Create new Next.js project
-npx create-next-app@latest MyWebsite-Next \
-  --typescript \
-  --tailwind \
-  --app \
-  --eslint \
-  --import-alias "@/*"
+# Navigate to existing project
+cd /Users/anasalhalabi/Desktop/MyWebsite
 
-cd MyWebsite-Next
+# Initialize Next.js dependencies
+npm init -y
+npm install next@latest react@latest react-dom@latest
+npm install -D typescript @types/react @types/node @types/react-dom
+npm install -D tailwindcss postcss autoprefixer
+npm install -D eslint eslint-config-next
+
+# Initialize TypeScript
+npx tsc --init
+
+# Initialize Tailwind CSS
+npx tailwindcss init -p
 ```
 
-**Options to select:**
-- ✅ TypeScript
-- ✅ ESLint
-- ✅ Tailwind CSS
-- ✅ src/ directory
-- ✅ App Router
-- ✅ Import alias (@/*)
-- ❌ Turbopack (not stable yet)
+**Update package.json scripts:**
+Add these scripts to your `package.json`:
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
 
 ### Step 1.2: Install Required Dependencies
 
@@ -62,6 +92,9 @@ npm install clsx tailwind-merge
 ### Step 1.3: Create Folder Structure
 
 ```bash
+# Create Next.js app directory structure
+mkdir -p src/app/\[locale\]
+
 # Create component directories
 mkdir -p src/components/layout
 mkdir -p src/components/sections
@@ -79,8 +112,13 @@ mkdir -p src/messages
 # Create types directory
 mkdir -p src/types
 
-# Create assets directory in public
+# Create fonts directory
+mkdir -p src/app/fonts
+
+# Move existing assets or create new structure
 mkdir -p public/assets/projects
+
+# Note: Keep your existing assets folder content and migrate images as needed
 ```
 
 ### Step 1.4: Configure Tailwind
@@ -719,29 +757,34 @@ export function Footer() {
 
 **Headshot Image:**
 ```bash
-# Using Squoosh or ImageOptim to compress
+# Using Squoosh or ImageOptim to compress existing assets
 # Target: <100KB, WebP format
 # Recommended size: 800x800px
 
-# Move to public directory
-cp /Users/anasalhalabi/Desktop/MyWebsite/assets/anas_headshot.png \
-   /Users/anasalhalabi/Desktop/MyWebsite-Next/public/assets/
+# Your existing assets are already in the project
+# Just ensure they're optimized and in the right location (public/assets/)
+# If needed, move/copy from current assets folder to public/assets/
 ```
 
 **Logo:**
 ```bash
-# Using SVGO to optimize
-npx svgo /Users/anasalhalabi/Desktop/MyWebsite/assets/anas_logo.svg \
-         -o /Users/anasalhalabi/Desktop/MyWebsite-Next/public/assets/anas_logo.svg
+# If you have SVG assets, optimize them
+# npx svgo assets/*.svg -o public/assets/
 ```
 
 ### Step 3.2: Extract Content from Current Site
 
-Read `index.html` and `index-ar.html` to extract:
-- Hero section text (name, title, bio)
-- Contact information
-- Social links
-- Any other content to preserve
+**Your existing HTML files contain the content we need:**
+- Check your current `index.html` (English version)
+- Check your current `index-ar.html` (Arabic version) or equivalent
+- Extract:
+  - Hero section text (name, title, bio)
+  - Contact information
+  - Social links
+  - Project information
+  - Any other content to preserve
+
+**Note:** Keep your old HTML files as reference until migration is complete.
 
 ### Step 3.3: Create Translation Files
 
@@ -1199,23 +1242,28 @@ Fix any issues identified.
 
 ## Phase 8: Deployment (Day 14)
 
-### Step 8.1: Initialize Git
+### Step 8.1: Commit Changes
+
+**Note:** Since you're already using git and on the `version-2.0` branch:
 
 ```bash
-cd MyWebsite-Next
-git init
+# Stage all the new Next.js files
 git add .
-git commit -m "[Feature] Initial Next.js migration with bilingual support"
+
+# Commit the migration
+git commit -m "[Feature] Complete Next.js migration with bilingual support and Tailwind CSS"
+
+# Push to the version-2.0 branch
+git push origin version-2.0
 ```
 
-### Step 8.2: Push to GitHub
+### Step 8.2: Test Before Merging to Main
 
-```bash
-# Create new repo on GitHub first, then:
-git remote add origin https://github.com/yourusername/MyWebsite-Next.git
-git branch -M main
-git push -u origin main
-```
+Before deploying to production (main branch):
+1. Test thoroughly on the `version-2.0` branch
+2. Verify all functionality works
+3. Run production build locally: `npm run build`
+4. Once confident, you can merge to main or set up deployment from `version-2.0` first
 
 ### Step 8.3: Configure for GitHub Pages
 
@@ -1311,18 +1359,26 @@ Test on production:
 
 ## Phase 9: Post-Deployment (Day 14+)
 
-### Step 9.1: Archive Old Site
+### Step 9.1: Clean Up Old Files
+
+**Note:** Since you've already backed up the old site on another branch, you can now safely clean up old files.
 
 ```bash
-cd /Users/anasalhalabi/Desktop/MyWebsite
-git checkout -b archive/version-1.0
-git push origin archive/version-1.0
+# Review and remove old HTML/CSS/JS files that are no longer needed
+# Keep this for reference - DON'T delete yet until you confirm everything works:
+# - index.html
+# - index-ar.html
+# - Any old CSS/JS files
+
+# Once everything is confirmed working, you can clean them up
 ```
 
-### Step 9.2: Update Repository
+### Step 9.2: Finalize Repository
 
-Option 1: Replace current repo with Next.js version
-Option 2: Keep both repos separate
+Since you're working in the same repository:
+- The old version is safely backed up on your backup branch
+- The `version-2.0` branch contains the new Next.js implementation
+- Consider merging `version-2.0` into `main` once fully tested
 
 ### Step 9.3: Monitor & Iterate
 
