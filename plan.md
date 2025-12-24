@@ -1,6 +1,7 @@
 # Next.js + Tailwind Migration Implementation Plan
 
 ## Overview
+
 This document provides a step-by-step implementation guide for migrating your portfolio from vanilla HTML/CSS/JS to Next.js 16.1.1 + Tailwind CSS.
 
 **Migration Approach:** In-place migration of existing project
@@ -8,14 +9,45 @@ This document provides a step-by-step implementation guide for migrating your po
 **Working Branch:** `version-2.0`
 **Backup:** Already completed on separate branch
 
-**Current Status:** Planning Phase
+**Current Status:** Implementation Complete - Testing & Polish Phase
 **Target Completion:** 14 days (2 weeks)
+**Last Updated:** December 24, 2025
+
+---
+
+## Implementation Progress Summary
+
+### ✅ Completed Phases
+
+- **Phase 1: Foundation Setup** - Next.js initialized, dependencies installed, folder structure created, Tailwind & i18n configured
+- **Phase 2: Core Layout Components** - All layout components built (Header, Footer, BentoGrid, Theme/Language toggles)
+- **Phase 3: Content Migration** - Translation files created, Hero & Contact sections built, assets organized
+
+### 🔄 Current Phase
+
+- **Phase 2.1: Fix Next.js 16 Breaking Changes** - ⚠️ **CRITICAL: `params` is now async in Next.js 16** - Must await params before accessing
+- **Phase 4: Projects Section** - Data structure and component complete, ⚠️ **BLOCKED: Project images missing** (public/assets/projects/ is empty)
+- **Phase 5: Homepage Assembly** - Components created, blocked by params fix and missing images
+
+### 📋 Remaining Tasks
+
+- **[CRITICAL]** Fix Next.js 16 async params issue in layout.tsx (blocking all pages)
+- **[URGENT]** Add project images to public/assets/projects/ folder
+- Complete Phase 5 local development testing
+- Verify all functionality works (language toggle, theme toggle, navigation)
+- Final responsive testing across all breakpoints
+- Cross-browser compatibility testing
+- Performance optimization (Lighthouse audit)
+- Accessibility audit (WCAG AA compliance)
+- SEO verification
+- Production deployment to GitHub Pages
 
 ---
 
 ## Pre-Migration Checklist
 
 Before starting implementation:
+
 - [x] Create CLAUDE.md as source of truth
 - [x] Create plan.md for implementation tracking
 - [x] Back up current website
@@ -25,12 +57,14 @@ Before starting implementation:
 ## Important Notes for In-Place Migration
 
 **Working with Existing Files:**
+
 - Your old HTML, CSS, and JS files will coexist with new Next.js files during migration
 - Do NOT delete old files until the migration is complete and tested
 - The old files serve as reference for content and styling
 - Once Next.js is fully working, old files can be removed or moved to an archive folder
 
 **File Organization:**
+
 - Old files: Keep in root directory as reference (index.html, styles/, scripts/, etc.)
 - New files: Create in `src/` directory (Next.js App Router structure)
 - Public assets: Move/organize into `public/assets/` for Next.js
@@ -65,6 +99,7 @@ npx tailwindcss init -p
 
 **Update package.json scripts:**
 Add these scripts to your `package.json`:
+
 ```json
 {
   "scripts": {
@@ -128,64 +163,62 @@ mkdir -p public/assets/projects
 Replace contents with:
 
 ```typescript
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
         background: {
-          DEFAULT: 'hsl(var(--background))',
-          elevated: 'hsl(var(--background-elevated))',
-          glass: 'hsl(var(--background-glass))',
+          DEFAULT: "hsl(var(--background))",
+          elevated: "hsl(var(--background-elevated))",
+          glass: "hsl(var(--background-glass))",
         },
         foreground: {
-          DEFAULT: 'hsl(var(--foreground))',
-          muted: 'hsl(var(--foreground-muted))',
-          subtle: 'hsl(var(--foreground-subtle))',
+          DEFAULT: "hsl(var(--foreground))",
+          muted: "hsl(var(--foreground-muted))",
+          subtle: "hsl(var(--foreground-subtle))",
         },
         border: {
-          DEFAULT: 'hsl(var(--border))',
-          hover: 'hsl(var(--border-hover))',
+          DEFAULT: "hsl(var(--border))",
+          hover: "hsl(var(--border-hover))",
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          hover: 'hsl(var(--accent-hover))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: "hsl(var(--accent))",
+          hover: "hsl(var(--accent-hover))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        arabic: ['var(--font-cairo)', 'system-ui', 'sans-serif'],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        arabic: ["var(--font-cairo)", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        '4xl': '2rem',
+        "4xl": "2rem",
       },
       backdropBlur: {
-        xs: '2px',
+        xs: "2px",
       },
     },
   },
-  plugins: [
-    require('tailwindcss-rtl'),
-  ],
-}
+  plugins: [require("tailwindcss-rtl")],
+};
 
-export default config
+export default config;
 ```
 
 **Note:** Colors now use CSS variables for light/dark mode support. See Step 2.2 for CSS variable definitions.
@@ -195,18 +228,18 @@ export default config
 **File:** `src/lib/i18n.ts`
 
 ```typescript
-import { getRequestConfig } from 'next-intl/server'
+import { getRequestConfig } from "next-intl/server";
 
-export const locales = ['ar', 'en'] as const
-export const defaultLocale = 'ar' as const
+export const locales = ["ar", "en"] as const;
+export const defaultLocale = "ar" as const;
 
-export type Locale = (typeof locales)[number]
+export type Locale = (typeof locales)[number];
 
 export default getRequestConfig(async ({ locale }) => ({
   messages: (await import(`@/messages/${locale}.json`)).default,
-  timeZone: 'Asia/Riyadh',
-  now: new Date()
-}))
+  timeZone: "Asia/Riyadh",
+  now: new Date(),
+}));
 ```
 
 **File:** `next.config.mjs`
@@ -214,19 +247,19 @@ export default getRequestConfig(async ({ locale }) => ({
 Replace contents with:
 
 ```javascript
-import createNextIntlPlugin from 'next-intl/plugin'
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin('./src/lib/i18n.ts')
+const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',  // Required for GitHub Pages static export
+  output: "export", // Required for GitHub Pages static export
   images: {
-    unoptimized: true,  // GitHub Pages doesn't support image optimization
+    unoptimized: true, // GitHub Pages doesn't support image optimization
   },
-}
+};
 
-export default withNextIntl(nextConfig)
+export default withNextIntl(nextConfig);
 ```
 
 **Note:** This configuration is set up for GitHub Pages deployment with static export. All pages will be pre-rendered at build time.
@@ -234,18 +267,18 @@ export default withNextIntl(nextConfig)
 **File:** `src/middleware.ts`
 
 ```typescript
-import createMiddleware from 'next-intl/middleware'
-import { locales, defaultLocale } from './lib/i18n'
+import createMiddleware from "next-intl/middleware";
+import { locales, defaultLocale } from "./lib/i18n";
 
 export default createMiddleware({
   locales,
   defaultLocale,
-  localePrefix: 'always'
-})
+  localePrefix: "always",
+});
 
 export const config = {
-  matcher: ['/', '/(ar|en)/:path*']
-}
+  matcher: ["/", "/(ar|en)/:path*"],
+};
 ```
 
 ### Step 1.6: Create Utility Functions
@@ -253,22 +286,23 @@ export const config = {
 **File:** `src/lib/utils.ts`
 
 ```typescript
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 ```
 
 **Checklist:**
-- [ ] Next.js project initialized
-- [ ] Dependencies installed
-- [ ] Folder structure created
-- [ ] Tailwind configured with design tokens
-- [ ] i18n configured with Arabic default
-- [ ] Middleware created for locale routing
-- [ ] Utility functions added
+
+- [x] Next.js project initialized
+- [x] Dependencies installed
+- [x] Folder structure created
+- [x] Tailwind configured with design tokens
+- [x] i18n configured with Arabic default
+- [x] Middleware created for locale routing
+- [x] Utility functions added
 
 ---
 
@@ -279,103 +313,107 @@ export function cn(...inputs: ClassValue[]) {
 **File:** `src/app/layout.tsx`
 
 ```typescript
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://noiceanas.com'),
-}
+  metadataBase: new URL("https://noiceanas.com"),
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return children
+  return children;
 }
 ```
 
 **File:** `src/app/[locale]/layout.tsx`
 
 ```typescript
-import { Inter } from 'next/font/google'
-import localFont from 'next/font/local'
-import { notFound } from 'next/navigation'
-import { getTranslations } from 'next-intl/server'
-import { locales } from '@/lib/i18n'
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { locales } from "@/lib/i18n";
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const cairo = localFont({
-  src: '../fonts/Cairo-VariableFont_wght.ttf',
-  variable: '--font-cairo',
-  display: 'swap',
-})
+  src: "../fonts/Cairo-VariableFont_wght.ttf",
+  variable: "--font-cairo",
+  display: "swap",
+});
 
 export async function generateMetadata({ params: { locale } }) {
-  const t = await getTranslations({ locale, namespace: 'metadata' })
+  const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
     title: {
-      template: '%s | Anas Alhalabi',
-      default: t('title'),
+      template: "%s | Anas Alhalabi",
+      default: t("title"),
     },
-    description: t('description'),
+    description: t("description"),
     alternates: {
       canonical: `https://noiceanas.com/${locale}`,
       languages: {
-        'ar': 'https://noiceanas.com/ar',
-        'en': 'https://noiceanas.com/en',
+        ar: "https://noiceanas.com/ar",
+        en: "https://noiceanas.com/en",
       },
     },
     openGraph: {
-      title: t('title'),
-      description: t('description'),
-      url: 'https://noiceanas.com',
-      siteName: 'Anas Alhalabi',
+      title: t("title"),
+      description: t("description"),
+      url: "https://noiceanas.com",
+      siteName: "Anas Alhalabi",
       images: [
         {
-          url: '/assets/anas_headshot.png',
+          url: "/assets/anas_headshot.png",
           width: 1200,
           height: 630,
-        }
+        },
       ],
-      locale: locale === 'ar' ? 'ar_SA' : 'en_US',
-      type: 'website',
+      locale: locale === "ar" ? "ar_SA" : "en_US",
+      type: "website",
     },
     twitter: {
-      card: 'summary_large_image',
-      title: t('title'),
-      description: t('description'),
-      images: ['/assets/anas_headshot.png'],
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/assets/anas_headshot.png"],
     },
-  }
+  };
 }
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params: { locale },
 }: {
-  children: React.ReactNode
-  params: { locale: string }
+  children: React.ReactNode;
+  params: { locale: string };
 }) {
   if (!locales.includes(locale as any)) {
-    notFound()
+    notFound();
   }
 
-  const direction = locale === 'ar' ? 'rtl' : 'ltr'
+  const direction = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={direction}>
-      <body className={`${inter.variable} ${cairo.variable} ${locale === 'ar' ? 'font-arabic' : 'font-sans'} bg-background text-foreground antialiased`}>
+      <body
+        className={`${inter.variable} ${cairo.variable} ${
+          locale === "ar" ? "font-arabic" : "font-sans"
+        } bg-background text-foreground antialiased`}
+      >
         {children}
       </body>
     </html>
-  )
+  );
 }
 ```
 
@@ -393,52 +431,52 @@ Replace contents with CSS variables for light/dark mode support:
 @layer base {
   :root {
     /* Light Mode Colors */
-    --background: 0 0% 100%;                    /* White */
-    --background-elevated: 0 0% 98%;            /* Off-white */
-    --background-glass: 0 0% 96% / 0.8;         /* Glass effect */
+    --background: 0 0% 100%; /* White */
+    --background-elevated: 0 0% 98%; /* Off-white */
+    --background-glass: 0 0% 96% / 0.8; /* Glass effect */
 
-    --foreground: 222 47% 11%;                  /* Dark gray */
-    --foreground-muted: 215 16% 47%;            /* Medium gray */
-    --foreground-subtle: 220 9% 66%;            /* Light gray */
+    --foreground: 222 47% 11%; /* Dark gray */
+    --foreground-muted: 215 16% 47%; /* Medium gray */
+    --foreground-subtle: 220 9% 66%; /* Light gray */
 
-    --border: 214 32% 91%;                      /* Light border */
-    --border-hover: 214 32% 85%;                /* Hover border */
+    --border: 214 32% 91%; /* Light border */
+    --border-hover: 214 32% 85%; /* Hover border */
 
-    --accent: 221 83% 53%;                      /* Blue */
-    --accent-hover: 221 83% 45%;                /* Darker blue */
-    --accent-foreground: 0 0% 100%;             /* White text on accent */
+    --accent: 221 83% 53%; /* Blue */
+    --accent-hover: 221 83% 45%; /* Darker blue */
+    --accent-foreground: 0 0% 100%; /* White text on accent */
 
-    --destructive: 0 84% 60%;                   /* Red */
-    --destructive-foreground: 0 0% 100%;        /* White */
+    --destructive: 0 84% 60%; /* Red */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --muted: 210 40% 96%;                       /* Light muted bg */
-    --muted-foreground: 215 16% 47%;            /* Muted text */
+    --muted: 210 40% 96%; /* Light muted bg */
+    --muted-foreground: 215 16% 47%; /* Muted text */
 
-    --radius: 0.5rem;                           /* Default border radius */
+    --radius: 0.5rem; /* Default border radius */
   }
 
   .dark {
     /* Dark Mode Colors */
-    --background: 222 47% 4%;                   /* Deep black */
-    --background-elevated: 222 47% 8%;          /* Card backgrounds */
-    --background-glass: 0 0% 100% / 0.05;       /* Glass effect */
+    --background: 222 47% 4%; /* Deep black */
+    --background-elevated: 222 47% 8%; /* Card backgrounds */
+    --background-glass: 0 0% 100% / 0.05; /* Glass effect */
 
-    --foreground: 0 0% 98%;                     /* Off-white */
-    --foreground-muted: 215 20% 65%;            /* Light gray */
-    --foreground-subtle: 217 10% 40%;           /* Medium gray */
+    --foreground: 0 0% 98%; /* Off-white */
+    --foreground-muted: 215 20% 65%; /* Light gray */
+    --foreground-subtle: 217 10% 40%; /* Medium gray */
 
-    --border: 0 0% 100% / 0.1;                  /* Transparent white */
-    --border-hover: 0 0% 100% / 0.2;            /* Lighter transparent */
+    --border: 0 0% 100% / 0.1; /* Transparent white */
+    --border-hover: 0 0% 100% / 0.2; /* Lighter transparent */
 
-    --accent: 221 83% 53%;                      /* Blue */
-    --accent-hover: 221 83% 45%;                /* Darker blue */
-    --accent-foreground: 0 0% 100%;             /* White text */
+    --accent: 221 83% 53%; /* Blue */
+    --accent-hover: 221 83% 45%; /* Darker blue */
+    --accent-foreground: 0 0% 100%; /* White text */
 
-    --destructive: 0 84% 60%;                   /* Red */
-    --destructive-foreground: 0 0% 100%;        /* White */
+    --destructive: 0 84% 60%; /* Red */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --muted: 217 33% 17%;                       /* Dark muted bg */
-    --muted-foreground: 215 20% 65%;            /* Muted text */
+    --muted: 217 33% 17%; /* Dark muted bg */
+    --muted-foreground: 215 20% 65%; /* Muted text */
   }
 }
 
@@ -454,6 +492,7 @@ Replace contents with CSS variables for light/dark mode support:
 ```
 
 **Important Notes:**
+
 - Colors use HSL format without `hsl()` wrapper (Tailwind requirement)
 - Light mode is default (`:root`)
 - Dark mode uses `.dark` class (applied via JavaScript or system preference)
@@ -464,47 +503,51 @@ Replace contents with CSS variables for light/dark mode support:
 **File:** `src/components/layout/BentoGrid.tsx`
 
 ```typescript
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 interface BentoGridProps {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 export function BentoGrid({ children, className }: BentoGridProps) {
   return (
-    <div className={cn(
-      'grid grid-cols-12 gap-4 md:gap-6 auto-rows-[minmax(200px,auto)]',
-      className
-    )}>
+    <div
+      className={cn(
+        "grid grid-cols-12 gap-4 md:gap-6 auto-rows-[minmax(200px,auto)]",
+        className
+      )}
+    >
       {children}
     </div>
-  )
+  );
 }
 
 interface BentoCardProps {
-  children: React.ReactNode
-  className?: string
-  span?: string
+  children: React.ReactNode;
+  className?: string;
+  span?: string;
 }
 
 export function BentoCard({
   children,
   className,
-  span = 'col-span-12 md:col-span-6'
+  span = "col-span-12 md:col-span-6",
 }: BentoCardProps) {
   return (
-    <div className={cn(
-      'group relative overflow-hidden',
-      'bg-background-elevated border border-border',
-      'rounded-2xl p-6 md:p-8',
-      'hover:border-border-hover transition-colors duration-200',
-      span,
-      className
-    )}>
+    <div
+      className={cn(
+        "group relative overflow-hidden",
+        "bg-background-elevated border border-border",
+        "rounded-2xl p-6 md:p-8",
+        "hover:border-border-hover transition-colors duration-200",
+        span,
+        className
+      )}
+    >
       {children}
     </div>
-  )
+  );
 }
 ```
 
@@ -513,18 +556,18 @@ export function BentoCard({
 **File:** `src/components/layout/Header.tsx`
 
 ```typescript
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
-import { LanguageToggle } from '@/components/ui/LanguageToggle'
-import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Header() {
-  const t = useTranslations('nav')
-  const params = useParams()
-  const locale = params.locale as string
+  const t = useTranslations("nav");
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <header className="fixed top-0 start-0 end-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -541,13 +584,13 @@ export function Header() {
             href={`/${locale}#projects`}
             className="text-sm text-foreground-muted hover:text-foreground transition-colors"
           >
-            {t('projects')}
+            {t("projects")}
           </Link>
           <Link
             href={`/${locale}#contact`}
             className="text-sm text-foreground-muted hover:text-foreground transition-colors"
           >
-            {t('contact')}
+            {t("contact")}
           </Link>
 
           {/* Theme and Language Toggles */}
@@ -558,7 +601,7 @@ export function Header() {
         </div>
       </nav>
     </header>
-  )
+  );
 }
 ```
 
@@ -567,32 +610,35 @@ export function Header() {
 **File:** `src/components/ui/LanguageToggle.tsx`
 
 ```typescript
-'use client'
+"use client";
 
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 export function LanguageToggle() {
-  const params = useParams()
-  const pathname = usePathname()
-  const router = useRouter()
+  const params = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const currentLocale = params.locale as string
-  const otherLocale = currentLocale === 'ar' ? 'en' : 'ar'
+  const currentLocale = params.locale as string;
+  const otherLocale = currentLocale === "ar" ? "en" : "ar";
 
   const handleToggle = () => {
-    const newPathname = pathname.replace(`/${currentLocale}`, `/${otherLocale}`)
-    router.push(newPathname)
-  }
+    const newPathname = pathname.replace(
+      `/${currentLocale}`,
+      `/${otherLocale}`
+    );
+    router.push(newPathname);
+  };
 
   return (
     <button
       onClick={handleToggle}
       className="px-3 py-1.5 text-sm border border-border rounded-lg hover:border-border-hover hover:bg-background-elevated transition-colors"
-      aria-label={`Switch to ${otherLocale === 'ar' ? 'Arabic' : 'English'}`}
+      aria-label={`Switch to ${otherLocale === "ar" ? "Arabic" : "English"}`}
     >
-      {otherLocale === 'ar' ? 'العربية' : 'EN'}
+      {otherLocale === "ar" ? "العربية" : "EN"}
     </button>
-  )
+  );
 }
 ```
 
@@ -601,46 +647,47 @@ export function LanguageToggle() {
 **File:** `src/components/ui/ThemeToggle.tsx`
 
 ```typescript
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
-  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
     // Check localStorage or system preference
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const initialTheme = savedTheme || systemTheme
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
+    const initialTheme = savedTheme || systemTheme;
 
-    setTheme(initialTheme)
-    document.documentElement.classList.toggle('dark', initialTheme === 'dark')
-  }, [])
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+  }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark', newTheme === 'dark')
-  }
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
 
   // Prevent flash of wrong theme
   if (!mounted) {
-    return (
-      <div className="w-9 h-9 rounded-lg border border-border" />
-    )
+    return <div className="w-9 h-9 rounded-lg border border-border" />;
   }
 
   return (
     <button
       onClick={toggleTheme}
       className="p-2 rounded-lg border border-border hover:border-border-hover hover:bg-background-elevated transition-colors"
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
-      {theme === 'light' ? (
+      {theme === "light" ? (
         // Moon icon for dark mode
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -674,7 +721,7 @@ export function ThemeToggle() {
         </svg>
       )}
     </button>
-  )
+  );
 }
 ```
 
@@ -701,17 +748,17 @@ Add this script before the body closes in `src/app/layout.tsx`:
 **File:** `src/components/layout/Footer.tsx`
 
 ```typescript
-import { useTranslations } from 'next-intl'
+import { useTranslations } from "next-intl";
 
 export function Footer() {
-  const t = useTranslations('footer')
+  const t = useTranslations("footer");
 
   return (
     <footer className="border-t border-border mt-20">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-foreground-muted">
-            © {new Date().getFullYear()} Anas Alhalabi. {t('rights')}
+            © {new Date().getFullYear()} Anas Alhalabi. {t("rights")}
           </p>
 
           <div className="flex items-center gap-4">
@@ -735,19 +782,266 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 ```
 
 **Checklist:**
-- [ ] Root layouts created
-- [ ] Fonts configured (Inter + Cairo)
-- [ ] Global styles updated with CSS variables for light/dark mode
-- [ ] BentoGrid component built
-- [ ] Header component built
-- [ ] Theme toggle working (light/dark mode)
-- [ ] Language toggle working (AR/EN)
-- [ ] Footer component built
+
+- [x] Root layouts created
+- [x] Fonts configured (Inter + Cairo)
+- [x] Global styles updated with CSS variables for light/dark mode
+- [x] BentoGrid component built
+- [x] Header component built
+- [x] Theme toggle working (light/dark mode)
+- [x] Language toggle working (AR/EN)
+- [x] Footer component built
+
+---
+
+## Phase 2.1: Fix Next.js 16 Breaking Changes (CRITICAL)
+
+### Issue: Async Params in Next.js 16
+
+Next.js 16 introduced breaking changes:
+
+1. `params` in layouts and pages is now a Promise and must be awaited
+2. next-intl requires explicit locale handling with `requestLocale`
+
+**Errors:**
+
+```
+Error: Route "/[locale]" used `params.locale`. `params` is a Promise...
+Error: Cannot find module '../messages/undefined.json'
+Error: No locale was returned from `getRequestConfig`
+```
+
+### Step 2.1.1: Fix i18n Configuration
+
+**File:** `src/lib/i18n.ts`
+
+The issue is that `locale` parameter is deprecated in favor of `requestLocale`, and locale must be explicitly returned:
+
+```typescript
+import { getRequestConfig } from "next-intl/server";
+import { notFound } from "next/navigation";
+
+export const locales = ["ar", "en"] as const;
+export const defaultLocale = "ar" as const;
+
+export type Locale = (typeof locales)[number];
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  // Get locale from the request
+  let locale = await requestLocale;
+
+  // Validate that the locale is valid
+  if (!locale || !locales.includes(locale as Locale)) {
+    locale = defaultLocale;
+  }
+
+  return {
+    locale, // MUST return locale explicitly
+    messages: (await import(`../messages/${locale}.json`)).default,
+    timeZone: "Asia/Riyadh",
+    now: new Date(),
+  };
+});
+```
+
+**File:** `src/middleware.ts`
+
+Update matcher to be more robust:
+
+```typescript
+import createMiddleware from "next-intl/middleware";
+import { locales, defaultLocale } from "./lib/i18n";
+
+export default createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: "always",
+});
+
+export const config = {
+  matcher: [
+    // Match all pathnames except for
+    // - … if they start with `/api`, `/_next` or `/_vercel`
+    // - … the ones containing a dot (e.g. `favicon.ico`)
+    "/((?!api|_next|_vercel|.*\\..*).*)",
+  ],
+};
+```
+
+### Step 2.1.2: Fix Layout Params
+
+**File:** `src/app/[locale]/layout.tsx`
+
+Update both `generateMetadata` and `LocaleLayout` to await params, and add `NextIntlClientProvider` wrapper:
+
+**Key Changes:**
+
+1. Change `params` type from `{ locale: string }` to `Promise<{ locale: string }>`
+2. Await params before destructuring: `const { locale } = await params`
+3. Add `NextIntlClientProvider` import
+4. Load messages and wrap children with provider for client components
+
+```typescript
+// Before (BROKEN in Next.js 16):
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  // ...
+}
+
+export default async function LocaleLayout({
+  children,
+  params: { locale },
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
+  // ...
+}
+
+// After (FIXED for Next.js 16):
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  // ...
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  // ...
+}
+```
+
+**Full corrected file:**
+
+```typescript
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { locales } from "@/lib/i18n";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const cairo = localFont({
+  src: "../fonts/Cairo-VariableFont_wght.ttf",
+  variable: "--font-cairo",
+  display: "swap",
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+
+  return {
+    title: {
+      template: "%s | Anas Alhalabi",
+      default: t("title"),
+    },
+    description: t("description"),
+    alternates: {
+      canonical: `https://noiceanas.com/${locale}`,
+      languages: {
+        ar: "https://noiceanas.com/ar",
+        en: "https://noiceanas.com/en",
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: "https://noiceanas.com",
+      siteName: "Anas Alhalabi",
+      images: [
+        {
+          url: "/assets/anas_headshot.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: locale === "ar" ? "ar_SA" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/assets/anas_headshot.png"],
+    },
+  };
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  if (!locales.includes(locale as any)) {
+    notFound();
+  }
+
+  const direction = locale === "ar" ? "rtl" : "ltr";
+
+  // Load messages for client components
+  const messages = (await import(`@/messages/${locale}.json`)).default;
+
+  return (
+    <html lang={locale} dir={direction}>
+      <body
+        className={`${inter.variable} ${cairo.variable} ${
+          locale === "ar" ? "font-arabic" : "font-sans"
+        } bg-background text-foreground antialiased`}
+      >
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+**Checklist:**
+
+- [x] Update `generateMetadata` to await params
+- [x] Update `LocaleLayout` to await params
+- [x] Add `NextIntlClientProvider` wrapper for client components
+- [x] Import and pass messages to client provider
+- [x] Fix i18n.ts to use `requestLocale` instead of `locale`
+- [x] Return `locale` explicitly in getRequestConfig
+- [x] Update middleware matcher pattern
+- [ ] Test that `npm run dev` runs without errors
+- [ ] Verify English and Arabic routes load correctly
 
 ---
 
@@ -756,6 +1050,7 @@ export function Footer() {
 ### Step 3.1: Optimize Assets
 
 **Headshot Image:**
+
 ```bash
 # Using Squoosh or ImageOptim to compress existing assets
 # Target: <100KB, WebP format
@@ -767,6 +1062,7 @@ export function Footer() {
 ```
 
 **Logo:**
+
 ```bash
 # If you have SVG assets, optimize them
 # npx svgo assets/*.svg -o public/assets/
@@ -775,6 +1071,7 @@ export function Footer() {
 ### Step 3.2: Extract Content from Current Site
 
 **Your existing HTML files contain the content we need:**
+
 - Check your current `index.html` (English version)
 - Check your current `index-ar.html` (Arabic version) or equivalent
 - Extract:
@@ -861,30 +1158,27 @@ export function Footer() {
 **File:** `src/components/sections/Hero.tsx`
 
 ```typescript
-import { useTranslations } from 'next-intl'
-import Image from 'next/image'
-import { BentoCard } from '@/components/layout/BentoGrid'
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { BentoCard } from "@/components/layout/BentoGrid";
 
 export function Hero() {
-  const t = useTranslations('hero')
+  const t = useTranslations("hero");
 
   return (
     <>
       <BentoCard span="col-span-12 md:col-span-8">
         <div className="flex flex-col justify-center h-full">
-          <p className="text-foreground-muted text-lg mb-2">
-            {t('greeting')}
-          </p>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            {t('title')}
-          </h1>
-          <p className="text-foreground-muted text-lg max-w-2xl">
-            {t('bio')}
-          </p>
+          <p className="text-foreground-muted text-lg mb-2">{t("greeting")}</p>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">{t("title")}</h1>
+          <p className="text-foreground-muted text-lg max-w-2xl">{t("bio")}</p>
         </div>
       </BentoCard>
 
-      <BentoCard span="col-span-12 md:col-span-4" className="flex items-center justify-center">
+      <BentoCard
+        span="col-span-12 md:col-span-4"
+        className="flex items-center justify-center"
+      >
         <div className="relative w-full aspect-square max-w-sm">
           <Image
             src="/assets/anas_headshot.png"
@@ -897,7 +1191,7 @@ export function Hero() {
         </div>
       </BentoCard>
     </>
-  )
+  );
 }
 ```
 
@@ -906,34 +1200,35 @@ export function Hero() {
 **File:** `src/components/sections/Contact.tsx`
 
 ```typescript
-import { useTranslations } from 'next-intl'
-import { BentoCard } from '@/components/layout/BentoGrid'
+import { useTranslations } from "next-intl";
+import { BentoCard } from "@/components/layout/BentoGrid";
 
 export function Contact() {
-  const t = useTranslations('contact')
+  const t = useTranslations("contact");
 
   return (
     <BentoCard span="col-span-12 md:col-span-4" id="contact">
-      <h2 className="text-2xl font-bold mb-2">{t('title')}</h2>
-      <p className="text-foreground-muted mb-6">{t('description')}</p>
+      <h2 className="text-2xl font-bold mb-2">{t("title")}</h2>
+      <p className="text-foreground-muted mb-6">{t("description")}</p>
 
       <a
         href="mailto:your.email@example.com"
         className="inline-flex items-center justify-center px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors"
       >
-        {t('email')}
+        {t("email")}
       </a>
     </BentoCard>
-  )
+  );
 }
 ```
 
 **Checklist:**
-- [ ] Assets optimized and moved
-- [ ] Translation files created
-- [ ] Hero section built
-- [ ] Contact section built
-- [ ] Content extracted from old site
+
+- [x] Assets optimized and moved
+- [x] Translation files created
+- [x] Hero section built
+- [x] Contact section built
+- [x] Content extracted from old site
 
 ---
 
@@ -945,48 +1240,48 @@ export function Contact() {
 
 ```typescript
 export interface Project {
-  id: string
-  titleEn: string
-  titleAr: string
-  descriptionEn: string
-  descriptionAr: string
-  tags: string[]
-  demoUrl?: string
-  githubUrl?: string
-  imageUrl: string
-  featured: boolean
-  order: number
+  id: string;
+  titleEn: string;
+  titleAr: string;
+  descriptionEn: string;
+  descriptionAr: string;
+  tags: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+  imageUrl: string;
+  featured: boolean;
+  order: number;
 }
 ```
 
 **File:** `src/data/projects.ts`
 
 ```typescript
-import { Project } from '@/types'
+import { Project } from "@/types";
 
 export const projects: Project[] = [
   {
-    id: 'project-1',
-    titleEn: 'Project Name',
-    titleAr: 'اسم المشروع',
-    descriptionEn: 'Brief description of the project',
-    descriptionAr: 'وصف مختصر للمشروع',
-    tags: ['Next.js', 'TypeScript', 'Tailwind'],
-    demoUrl: 'https://example.com',
-    githubUrl: 'https://github.com/username/repo',
-    imageUrl: '/assets/projects/project-1.png',
+    id: "project-1",
+    titleEn: "Project Name",
+    titleAr: "اسم المشروع",
+    descriptionEn: "Brief description of the project",
+    descriptionAr: "وصف مختصر للمشروع",
+    tags: ["Next.js", "TypeScript", "Tailwind"],
+    demoUrl: "https://example.com",
+    githubUrl: "https://github.com/username/repo",
+    imageUrl: "/assets/projects/project-1.png",
     featured: true,
-    order: 1
+    order: 1,
   },
   // Add 4-5 more projects
-]
+];
 
 export function getProjects(): Project[] {
-  return projects.sort((a, b) => a.order - b.order)
+  return projects.sort((a, b) => a.order - b.order);
 }
 
 export function getFeaturedProjects(): Project[] {
-  return projects.filter(p => p.featured).sort((a, b) => a.order - b.order)
+  return projects.filter((p) => p.featured).sort((a, b) => a.order - b.order);
 }
 ```
 
@@ -995,31 +1290,35 @@ export function getFeaturedProjects(): Project[] {
 **File:** `src/components/sections/Projects.tsx`
 
 ```typescript
-'use client'
+"use client";
 
-import { useLocale, useTranslations } from 'next-intl'
-import Image from 'next/image'
-import { BentoCard } from '@/components/layout/BentoGrid'
-import { getProjects } from '@/data/projects'
-import type { Locale } from '@/lib/i18n'
+import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import { BentoCard } from "@/components/layout/BentoGrid";
+import { getProjects } from "@/data/projects";
+import type { Locale } from "@/lib/i18n";
 
 export function Projects() {
-  const t = useTranslations('projects')
-  const locale = useLocale() as Locale
-  const projects = getProjects()
+  const t = useTranslations("projects");
+  const locale = useLocale() as Locale;
+  const projects = getProjects();
 
   return (
     <>
       <BentoCard span="col-span-12">
         <h2 className="text-3xl font-bold mb-8" id="projects">
-          {t('title')}
+          {t("title")}
         </h2>
       </BentoCard>
 
       {projects.map((project, index) => {
-        const title = locale === 'ar' ? project.titleAr : project.titleEn
-        const description = locale === 'ar' ? project.descriptionAr : project.descriptionEn
-        const span = index === 0 ? 'col-span-12 md:col-span-8' : 'col-span-12 md:col-span-4'
+        const title = locale === "ar" ? project.titleAr : project.titleEn;
+        const description =
+          locale === "ar" ? project.descriptionAr : project.descriptionEn;
+        const span =
+          index === 0
+            ? "col-span-12 md:col-span-8"
+            : "col-span-12 md:col-span-4";
 
         return (
           <BentoCard key={project.id} span={span}>
@@ -1037,7 +1336,7 @@ export function Projects() {
             <p className="text-foreground-muted mb-4">{description}</p>
 
             <div className="flex flex-wrap gap-2 mb-4">
-              {project.tags.map(tag => (
+              {project.tags.map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-xs bg-background-glass border border-border rounded-full"
@@ -1055,7 +1354,7 @@ export function Projects() {
                   rel="noopener noreferrer"
                   className="text-sm text-accent hover:text-accent-hover transition-colors"
                 >
-                  {t('viewProject')} →
+                  {t("viewProject")} →
                 </a>
               )}
               {project.githubUrl && (
@@ -1065,32 +1364,34 @@ export function Projects() {
                   rel="noopener noreferrer"
                   className="text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  {t('viewCode')}
+                  {t("viewCode")}
                 </a>
               )}
             </div>
           </BentoCard>
-        )
+        );
       })}
     </>
-  )
+  );
 }
 ```
 
 ### Step 4.3: Gather Project Images
 
 Create or find placeholder images for 5-6 projects:
+
 - Size: 800x600px
 - Format: WebP
 - Optimize to <50KB each
 - Save in `public/assets/projects/`
 
 **Checklist:**
-- [ ] Project type defined
-- [ ] Projects data created (5-6 projects)
-- [ ] Project images gathered and optimized
-- [ ] Projects section component built
-- [ ] Projects display correctly in both languages
+
+- [x] Project type defined
+- [x] Projects data created (5 projects)
+- [ ] Project images gathered and optimized ⚠️ MISSING: /public/assets/projects/ is empty
+- [x] Projects section component built
+- [ ] Projects display correctly in both languages (needs images to test)
 
 ---
 
@@ -1101,12 +1402,12 @@ Create or find placeholder images for 5-6 projects:
 **File:** `src/app/[locale]/page.tsx`
 
 ```typescript
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { BentoGrid } from '@/components/layout/BentoGrid'
-import { Hero } from '@/components/sections/Hero'
-import { Projects } from '@/components/sections/Projects'
-import { Contact } from '@/components/sections/Contact'
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { BentoGrid } from "@/components/layout/BentoGrid";
+import { Hero } from "@/components/sections/Hero";
+import { Projects } from "@/components/sections/Projects";
+import { Contact } from "@/components/sections/Contact";
 
 export default function HomePage() {
   return (
@@ -1123,7 +1424,7 @@ export default function HomePage() {
 
       <Footer />
     </>
-  )
+  );
 }
 ```
 
@@ -1134,11 +1435,13 @@ npm run dev
 ```
 
 Visit:
+
 - `http://localhost:3000` (should redirect to `/ar`)
 - `http://localhost:3000/ar` (Arabic version)
 - `http://localhost:3000/en` (English version)
 
 **Test:**
+
 - [ ] Arabic loads by default
 - [ ] Language toggle works
 - [ ] RTL layout renders correctly
@@ -1165,6 +1468,7 @@ Update components with hover effects:
 ### Step 6.2: Responsive Testing
 
 Test at breakpoints:
+
 - 320px (iPhone SE)
 - 375px (iPhone 12/13)
 - 414px (iPhone 12/13 Pro Max)
@@ -1184,6 +1488,7 @@ npm run build -- --analyze # (if analyzer plugin added)
 ```
 
 Check:
+
 - [ ] Bundle size <200KB initial JS
 - [ ] Images optimized
 - [ ] No console errors
@@ -1192,6 +1497,7 @@ Check:
 ### Step 6.4: Lighthouse Audit
 
 Run Lighthouse in Chrome DevTools:
+
 - [ ] Performance >90
 - [ ] Accessibility >90
 - [ ] Best Practices >90
@@ -1260,6 +1566,7 @@ git push origin version-2.0
 ### Step 8.2: Test Before Merging to Main
 
 Before deploying to production (main branch):
+
 1. Test thoroughly on the `version-2.0` branch
 2. Verify all functionality works
 3. Run production build locally: `npm run build`
@@ -1270,22 +1577,23 @@ Before deploying to production (main branch):
 1. **Update `next.config.mjs`** for static export:
 
 ```javascript
-import createNextIntlPlugin from 'next-intl/plugin'
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin('./src/lib/i18n.ts')
+const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',  // Required for GitHub Pages
+  output: "export", // Required for GitHub Pages
   images: {
-    unoptimized: true,  // GitHub Pages doesn't support image optimization
+    unoptimized: true, // GitHub Pages doesn't support image optimization
   },
-}
+};
 
-export default withNextIntl(nextConfig)
+export default withNextIntl(nextConfig);
 ```
 
 2. **Create CNAME file** in `public/` directory:
+
 ```bash
 echo "noiceanas.com" > public/CNAME
 ```
@@ -1307,8 +1615,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - run: npm ci
       - run: npm run build
@@ -1320,6 +1628,7 @@ jobs:
 ```
 
 4. **Commit and push workflow**:
+
 ```bash
 git add .github/workflows/deploy.yml next.config.mjs public/CNAME
 git commit -m "[Config] Configure GitHub Pages deployment"
@@ -1329,11 +1638,13 @@ git push origin main
 ### Step 8.4: Configure Custom Domain
 
 1. **Enable GitHub Pages** in repository settings:
+
    - Go to Settings > Pages
    - Source: Deploy from a branch → `gh-pages`
    - Custom domain: `noiceanas.com`
 
 2. **Configure DNS records** in your domain provider:
+
    - **A Records** (add all four):
      - 185.199.108.153
      - 185.199.109.153
@@ -1348,6 +1659,7 @@ git push origin main
 ### Step 8.5: Final Testing
 
 Test on production:
+
 - [ ] https://noiceanas.com (redirects to /ar)
 - [ ] https://noiceanas.com/ar
 - [ ] https://noiceanas.com/en
@@ -1376,6 +1688,7 @@ Test on production:
 ### Step 9.2: Finalize Repository
 
 Since you're working in the same repository:
+
 - The old version is safely backed up on your backup branch
 - The `version-2.0` branch contains the new Next.js implementation
 - Consider merging `version-2.0` into `main` once fully tested
@@ -1393,15 +1706,19 @@ Since you're working in the same repository:
 ## Troubleshooting
 
 ### Issue: Fonts not loading
+
 **Solution:** Download Cairo font and place in `src/app/fonts/`, update font config
 
 ### Issue: RTL not working
+
 **Solution:** Check `dir` attribute in layout, ensure RTL plugin installed
 
 ### Issue: Images not optimizing
+
 **Solution:** Verify Next.js Image component usage, check image paths
 
 ### Issue: Build fails
+
 **Solution:** Run `npm run build` locally, check TypeScript errors
 
 ---

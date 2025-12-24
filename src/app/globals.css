@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode Colors */
+    --background: 0 0% 100%;                    /* White */
+    --background-elevated: 0 0% 98%;            /* Off-white */
+    --background-glass: 0 0% 96% / 0.8;         /* Glass effect */
+
+    --foreground: 222 47% 11%;                  /* Dark gray */
+    --foreground-muted: 215 16% 47%;            /* Medium gray */
+    --foreground-subtle: 220 9% 66%;            /* Light gray */
+
+    --border: 214 32% 91%;                      /* Light border */
+    --border-hover: 214 32% 85%;                /* Hover border */
+
+    --accent: 221 83% 53%;                      /* Blue */
+    --accent-hover: 221 83% 45%;                /* Darker blue */
+    --accent-foreground: 0 0% 100%;             /* White text on accent */
+
+    --destructive: 0 84% 60%;                   /* Red */
+    --destructive-foreground: 0 0% 100%;        /* White */
+
+    --muted: 210 40% 96%;                       /* Light muted bg */
+    --muted-foreground: 215 16% 47%;            /* Muted text */
+
+    --radius: 0.5rem;                           /* Default border radius */
+  }
+
+  .dark {
+    /* Dark Mode Colors */
+    --background: 222 47% 4%;                   /* Deep black */
+    --background-elevated: 222 47% 8%;          /* Card backgrounds */
+    --background-glass: 0 0% 100% / 0.05;       /* Glass effect */
+
+    --foreground: 0 0% 98%;                     /* Off-white */
+    --foreground-muted: 215 20% 65%;            /* Light gray */
+    --foreground-subtle: 217 10% 40%;           /* Medium gray */
+
+    --border: 0 0% 100% / 0.1;                  /* Transparent white */
+    --border-hover: 0 0% 100% / 0.2;            /* Lighter transparent */
+
+    --accent: 221 83% 53%;                      /* Blue */
+    --accent-hover: 221 83% 45%;                /* Darker blue */
+    --accent-foreground: 0 0% 100%;             /* White text */
+
+    --destructive: 0 84% 60%;                   /* Red */
+    --destructive-foreground: 0 0% 100%;        /* White */
+
+    --muted: 217 33% 17%;                       /* Dark muted bg */
+    --muted-foreground: 215 20% 65%;            /* Muted text */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors;
+  }
+}

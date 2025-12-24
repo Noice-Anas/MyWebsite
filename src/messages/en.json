@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "title": "Anas Alhalabi - Developer & Designer",
+    "description": "Developer and designer specialized in building modern and innovative digital experiences",
+    "imageAlt": "Anas Alhalabi"
+  },
+  "nav": {
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Anas",
+    "title": "Developer & Designer",
+    "bio": "I build modern and innovative digital experiences using cutting-edge technologies"
+  },
+  "projects": {
+    "title": "Projects",
+    "viewProject": "View Project",
+    "viewCode": "View Code"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "description": "Let's work together on your next project",
+    "email": "Email"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}
